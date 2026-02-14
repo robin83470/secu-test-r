@@ -1,3 +1,4 @@
+Cross-Origin-Opener-Policy: same-origin
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +6,11 @@
   <title>Test</title>
 </head>
 <body>
-  <h1>Page de test 1</h1>
+  <h1>Page de test 3</h1>
   
     <div id="out"></div>
 
   <script>
-    console.log("Page chargée");
-
     console.log("Page chargée");
 
       const out = document.getElementById("out");
@@ -19,6 +18,10 @@
 
       // Bonus debug : montre le type, sans accéder au DOM de l'opener
       console.log("typeof window.opener =", typeof window.opener);
+
+       console.log("window.opener =", window.opener);
+      console.log("window.opener === null ?", window.opener === null);
+      console.log("document.referrer =", document.referrer);
    
  
   </script>
